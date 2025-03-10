@@ -2,31 +2,24 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background-image: url('fundo.jpg'); /* Caminho da imagem */
-    background-size: cover; /* A imagem vai cobrir toda a tela */
-    background-position: center; /* Centraliza a imagem */
-    background-attachment: fixed; /* A imagem fica fixa ao rolar a página */
+    background-color: #f4f4f4;
 }
-
 .container {
     max-width: 500px;
     margin: auto;
-    background: rgba(255, 255, 255, 0.8); /* Fundo transparente para dar destaque ao conteúdo */
+    background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-
 h1, h3 {
     text-align: center;
 }
-
 label {
     font-weight: bold;
     display: block;
     margin-top: 10px;
 }
-
 input, select, textarea {
     width: 100%;
     padding: 8px;
@@ -35,7 +28,6 @@ input, select, textarea {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
-
 button {
     width: 100%;
     padding: 10px;
@@ -46,7 +38,6 @@ button {
     cursor: pointer;
     margin-top: 10px;
 }
-
 button:hover {
     background: #218838;
 }
