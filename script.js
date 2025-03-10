@@ -45,10 +45,41 @@ function limparTudo() {
 }
 
 function enviarApontamento() {
+    const dataHoraInicial = document.getElementById("dataHoraInicial").value;
     const dataHoraFinal = document.getElementById("dataHoraFinal").value;
-    const dataHoraAtual = new Date().toISOString().slice(0, 16); // Formato: "YYYY-MM-DDTHH:MM"
+    const manutentor = document.getElementById("manutentor").value;
+    const centroTrabalho = document.getElementById("centroTrabalho").value;
+    const ordemConcluida = document.getElementById("ordemConcluida").value;
 
-    // Verificando se a data final é maior que a data atual
+    const campos = [
+        { id: "dataHoraInicial", value: dataHoraInicial },
+        { id: "dataHoraFinal", value: dataHoraFinal },
+        { id: "manutentor", value: manutentor },
+        { id: "centroTrabalho", value: centroTrabalho },
+        { id: "ordemConcluida", value: ordemConcluida }
+    ];
+
+    let erro = false;
+
+    // Verifica se os campos obrigatórios estão preenchidos e marca com borda vermelha se não estiverem
+    campos.forEach(campo => {
+        const element = document.getElementById(campo.id);
+        if (!campo.value || (campo.id === "ordemConcluida" && campo.value === "Não")) {
+            element.style.borderColor = "red";
+            erro = true;
+        } else {
+            element.style.borderColor = "";
+        }
+    });
+
+    // Se houver erro, não envia o apontamento
+    if (erro) {
+        alert("Todos os campos obrigatórios devem ser preenchidos e a ordem deve ser concluída.");
+        return;
+    }
+
+    // Validando a data final para não ser maior que a data atual
+    const dataHoraAtual = new Date().toISOString().slice(0, 16); // Formato: "YYYY-MM-DDTHH:MM"
     if (dataHoraFinal > dataHoraAtual) {
         alert("A data e hora final não pode ser maior que a data e hora atual.");
         return;
@@ -56,16 +87,15 @@ function enviarApontamento() {
 
     const apontamento = {
         numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
-        dataHoraInicial: document.getElementById("dataHoraInicial").value,
+        dataHoraInicial: dataHoraInicial,
         dataHoraFinal: dataHoraFinal,
-        manutentor: document.getElementById("manutentor").value,
-        centroTrabalho: document.getElementById("centroTrabalho").value,
+        manutentor: manutentor,
+        centroTrabalho: centroTrabalho,
+        ordemConcluida: ordemConcluida,
         observacao: document.getElementById("observacao").value,
-        ordemConcluida: document.getElementById("ordemConcluida").value,  // Adicionando o campo "Ordem Concluída"
         imagem: document.getElementById("imagem").files[0]
     };
 
     console.log("Dados do Apontamento:", apontamento);
     alert("Apontamento enviado com sucesso!");
 }
-
