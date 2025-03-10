@@ -25,6 +25,12 @@ async function buscarSolicitacao() {
     }
 }
 
+function limparSolicitacao() {
+    document.getElementById("numeroSolicitacao").value = ""; // Limpa o campo de número da solicitação
+    document.getElementById("resultado").innerHTML = ""; // Limpa o resultado da solicitação
+    document.getElementById("formApontamento").style.display = "none"; // Esconde o formulário de apontamento
+}
+
 function enviarApontamento() {
     const apontamento = {
         numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
