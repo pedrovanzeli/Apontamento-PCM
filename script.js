@@ -33,8 +33,7 @@ function enviarApontamento() {
         manutentor: document.getElementById("manutentor").value,
         centroTrabalho: document.getElementById("centroTrabalho").value,
         observacao: document.getElementById("observacao").value,
-        imagem: document.getElementById("imagem").files[0],
-        ordemConcluida: document.getElementById("ordemConcluida").value  // Novo campo
+        imagem: document.getElementById("imagem").files[0]
     };
     console.log("Dados do Apontamento:", apontamento);
     alert("Apontamento enviado com sucesso!");
