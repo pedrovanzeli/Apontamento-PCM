@@ -52,6 +52,7 @@ function enviarApontamento() {
         manutentor: document.getElementById("manutentor").value,
         centroTrabalho: document.getElementById("centroTrabalho").value,
         observacao: document.getElementById("observacao").value,
+        ordemConcluida: document.getElementById("ordemConcluida").value,  // Adicionando o campo "Ordem Concluída"
         imagem: document.getElementById("imagem").files[0]
     };
     console.log("Dados do Apontamento:", apontamento);
