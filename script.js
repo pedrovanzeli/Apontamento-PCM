@@ -45,16 +45,27 @@ function limparTudo() {
 }
 
 function enviarApontamento() {
+    const dataHoraFinal = document.getElementById("dataHoraFinal").value;
+    const dataHoraAtual = new Date().toISOString().slice(0, 16); // Formato: "YYYY-MM-DDTHH:MM"
+
+    // Verificando se a data final é maior que a data atual
+    if (dataHoraFinal > dataHoraAtual) {
+        alert("A data e hora final não pode ser maior que a data e hora atual.");
+        return;
+    }
+
     const apontamento = {
         numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
         dataHoraInicial: document.getElementById("dataHoraInicial").value,
-        dataHoraFinal: document.getElementById("dataHoraFinal").value,
+        dataHoraFinal: dataHoraFinal,
         manutentor: document.getElementById("manutentor").value,
         centroTrabalho: document.getElementById("centroTrabalho").value,
         observacao: document.getElementById("observacao").value,
         ordemConcluida: document.getElementById("ordemConcluida").value,  // Adicionando o campo "Ordem Concluída"
         imagem: document.getElementById("imagem").files[0]
     };
+
     console.log("Dados do Apontamento:", apontamento);
     alert("Apontamento enviado com sucesso!");
 }
+
