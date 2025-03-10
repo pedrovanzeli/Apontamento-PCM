@@ -25,10 +25,23 @@ async function buscarSolicitacao() {
     }
 }
 
-function limparSolicitacao() {
-    document.getElementById("numeroSolicitacao").value = ""; // Limpa o campo de número da solicitação
-    document.getElementById("resultado").innerHTML = ""; // Limpa o resultado da solicitação
-    document.getElementById("formApontamento").style.display = "none"; // Esconde o formulário de apontamento
+function limparTudo() {
+    // Limpa o campo de número da solicitação
+    document.getElementById("numeroSolicitacao").value = "";
+    
+    // Limpa o resultado da solicitação
+    document.getElementById("resultado").innerHTML = "";
+    
+    // Esconde o formulário de apontamento
+    document.getElementById("formApontamento").style.display = "none";
+    
+    // Limpa todos os campos do formulário de apontamento
+    document.getElementById("dataHoraInicial").value = "";
+    document.getElementById("dataHoraFinal").value = "";
+    document.getElementById("manutentor").value = "";
+    document.getElementById("centroTrabalho").value = "Eletrica";
+    document.getElementById("observacao").value = "";
+    document.getElementById("imagem").value = ""; // Limpa o campo de imagem
 }
 
 function enviarApontamento() {
