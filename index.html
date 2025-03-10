@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apontamento de Serviço</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Apontamento de Serviço</h1>
+        <label for="numeroSolicitacao">Número da Solicitação:</label>
+        <input type="text" id="numeroSolicitacao">
+        <button onclick="buscarSolicitacao()">Buscar</button>
+        
+        <div id="resultado"></div>
+        
+        <div id="formApontamento" style="display: none;">
+            <h3>Apontamento de Serviço</h3>
+            <label>Data e Hora Inicial:</label>
+            <input type="datetime-local" id="dataHoraInicial">
+            
+            <label>Data e Hora Final:</label>
+            <input type="datetime-local" id="dataHoraFinal">
+            
+            <label>Identificação do Manutentor:</label>
+            <input type="text" id="manutentor">
+            
+            <label>Centro de Trabalho:</label>
+            <select id="centroTrabalho">
+                <option value="Eletrica">Elétrica</option>
+                <option value="Mecanica">Mecânica</option>
+            </select>
+            
+            <label>Observação:</label>
+            <textarea id="observacao"></textarea>
+            
+            <label>Anexar Imagem:</label>
+            <input type="file" id="imagem" accept="image/*">
+            
+            <button onclick="enviarApontamento()">Enviar Apontamento</button>
+        </div>
+    </div>
+</body>
+</html>
