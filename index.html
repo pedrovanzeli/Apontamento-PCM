@@ -13,7 +13,6 @@
         <label for="numeroSolicitacao">Número da Solicitação:</label>
         <input type="text" id="numeroSolicitacao">
         <button onclick="buscarSolicitacao()">Buscar</button>
-        <button onclick="limparTudo()">Limpar</button>
         
         <div id="resultado"></div>
         
@@ -37,11 +36,19 @@
             <label>Observação:</label>
             <textarea id="observacao"></textarea>
             
+            <label>Ordem Concluída:</label>
+            <select id="ordemConcluida">
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+            </select>
+            
             <label>Anexar Imagem:</label>
             <input type="file" id="imagem" accept="image/*">
             
             <button onclick="enviarApontamento()">Enviar Apontamento</button>
         </div>
+        
+        <button onclick="limparTudo()">Limpar</button>
     </div>
 </body>
 </html>
