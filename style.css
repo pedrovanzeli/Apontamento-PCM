@@ -1,14 +1,17 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+    padding: 0;
+    background-image: url('c1027ad7-f2a4-45fa-98e4-7f9fd8ea4aa1'); /* Caminho da imagem (na mesma pasta) */
+    background-size: cover; /* A imagem vai cobrir toda a área da tela */
+    background-position: center center; /* A imagem será centralizada */
+    background-attachment: fixed; /* A imagem ficará fixa ao rolar a página */
 }
 
 .container {
     max-width: 500px;
     margin: auto;
-    background: white;
+    background: rgba(255, 255, 255, 0.8); /* Fundo branco semi-transparente para contraste */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
