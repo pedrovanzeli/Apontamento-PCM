@@ -30,8 +30,8 @@ h1, h3 {
 /* Estilização dos inputs e botões */
 input, select, textarea {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
+    padding: 12px;
+    margin-top: 10px; /* aumento do espaçamento */
     border-radius: 5px;
     border: 1px solid #ccc;
     box-sizing: border-box;
@@ -103,4 +103,12 @@ footer {
 
 .footer-content a:hover {
     text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .container {
+        max-width: 90%;
+        padding: 15px;
+    }
 }
