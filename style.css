@@ -3,6 +3,10 @@ body {
     margin: 0;
     padding: 20px;
     background-color: #f4f4f4;
+    background-image: url('c1027ad7-f2a4-45fa-98e4-7f9fd8ea4aa1.png');
+    background-size: cover;  /* Ajusta a imagem para cobrir toda a área */
+    background-position: center;  /* Centraliza a imagem */
+    background-repeat: no-repeat;  /* Evita a repetição da imagem */
 }
 
 .container {
