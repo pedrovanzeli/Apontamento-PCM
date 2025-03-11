@@ -8,12 +8,15 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+    <!-- Conteúdo principal da página -->
     <div class="container">
         <h1>Apontamento de Serviço</h1>
         <label for="numeroSolicitacao">Número de Solicitação:</label>
         <input type="text" id="numeroSolicitacao">
         <button onclick="buscarSolicitacao()">Buscar</button>
         <div id="resultado"></div>
+
+        <!-- Formulário de Apontamento -->
         <div id="formApontamento" style="display: none;">
             <h3>Apontamento de Serviço</h3>
             <label>Dados e Hora Inicial:</label>
@@ -42,5 +45,13 @@
             <button onclick="enviarApontamento()">Enviar Apontamento</button>
         </div>
     </div>
+
+    <!-- Rodapé com informações de contato -->
+    <footer>
+        <h3>Fale com a Holambra</h3>
+        <p><strong>Telefone:</strong> 1437699500</p>
+        <p><strong>E-mail:</strong> Holambra@Holambra.com.br</p>
+        <p><strong>Localização:</strong> COOPERATIVA AGROINDUSTRIAL Unidade Matriz, Rod. Raposo Tavares, km 256 - Holambra II, Paranapanema - SP, 18725-000</p>
+    </footer>
 </body>
 </html>
