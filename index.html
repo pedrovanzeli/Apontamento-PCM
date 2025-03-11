@@ -19,26 +19,18 @@
         <div id="formApontamento" style="display: none;">
             <h3>Apontamento de Serviço</h3>
             <label>Data e Hora Inicial:</label>
-            <input type="datetime-local" id="dataHoraInicial" required>
+            <input type="datetime-local" id="dataHoraInicial">
             
             <label>Data e Hora Final:</label>
-            <input type="datetime-local" id="dataHoraFinal" required>
+            <input type="datetime-local" id="dataHoraFinal">
             
             <label>Identificação do Manutentor:</label>
-            <input type="text" id="manutentor" required>
+            <input type="text" id="manutentor">
             
             <label>Centro de Trabalho:</label>
-            <select id="centroTrabalho" required>
-                <option value="">Selecione</option>
+            <select id="centroTrabalho">
                 <option value="Eletrica">Elétrica</option>
                 <option value="Mecanica">Mecânica</option>
-            </select>
-            
-            <label>Ordem Concluída:</label>
-            <select id="ordemConcluida" required>
-                <option value="">Selecione</option>
-                <option value="Sim">Sim</option>
-                <option value="Não">Não</option>
             </select>
             
             <label>Observação:</label>
@@ -49,8 +41,6 @@
             
             <button onclick="enviarApontamento()">Enviar Apontamento</button>
         </div>
-        
-        <button onclick="limparTudo()">Limpar</button>
     </div>
 </body>
 </html>
