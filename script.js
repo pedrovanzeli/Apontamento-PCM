@@ -22,6 +22,7 @@ async function buscarSolicitacao() {
             headers.forEach((header, index) => {
                 const valor = solicitacao[index] ? solicitacao[index].trim() : "";
                 
+                // Aqui filtramos quais campos queremos exibir, desconsiderando alguns específicos
                 if (!header.includes("Ordem Concluída") && 
                     !header.includes("Submission Date") && 
                     (!header.includes("LOCAL DE INSTALAÇÃO/EQUIPAMENTO") || valor !== "")) {
@@ -54,12 +55,12 @@ function limparTudo() {
     document.getElementById("imagem").value = "";
 }
 
-function enviarApontamento() {
+function enviarApontamento(event) {
+    event.preventDefault();
     const dataHoraInicial = document.getElementById("dataHoraInicial").value;
     const dataHoraFinal = document.getElementById("dataHoraFinal").value;
     const manutentor = document.getElementById("manutentor").value;
     const centroTrabalho = document.getElementById("centroTrabalho").value;
-    const ordemConcluida = document.getElementById("ordemConcluida").value;
     
     const campos = [
         { id: "dataHoraInicial", value: dataHoraInicial },
@@ -100,7 +101,7 @@ function enviarApontamento() {
         dataHoraFinal: dataHoraFinal,
         manutentor: manutentor,
         centroTrabalho: centroTrabalho,
-        ordemConcluida: ordemConcluida,
+        ordemConcluida: document.getElementById("ordemConcluida").value,
         observacao: document.getElementById("observacao").value,
         imagem: document.getElementById("imagem").files[0]
     };
