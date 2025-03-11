@@ -26,22 +26,15 @@ async function buscarSolicitacao() {
 }
 
 function limparTudo() {
-    // Limpa o campo de número da solicitação
     document.getElementById("numeroSolicitacao").value = "";
-    
-    // Limpa o resultado da solicitação
     document.getElementById("resultado").innerHTML = "";
-    
-    // Esconde o formulário de apontamento
     document.getElementById("formApontamento").style.display = "none";
-    
-    // Limpa todos os campos do formulário de apontamento
     document.getElementById("dataHoraInicial").value = "";
     document.getElementById("dataHoraFinal").value = "";
     document.getElementById("manutentor").value = "";
     document.getElementById("centroTrabalho").value = "Eletrica";
     document.getElementById("observacao").value = "";
-    document.getElementById("imagem").value = ""; // Limpa o campo de imagem
+    document.getElementById("imagem").value = "";
 }
 
 function enviarApontamento() {
@@ -50,13 +43,12 @@ function enviarApontamento() {
     const manutentor = document.getElementById("manutentor").value;
     const centroTrabalho = document.getElementById("centroTrabalho").value;
     const ordemConcluida = document.getElementById("ordemConcluida").value;
-
+    
     const campos = [
         { id: "dataHoraInicial", value: dataHoraInicial },
         { id: "dataHoraFinal", value: dataHoraFinal },
         { id: "manutentor", value: manutentor },
-        { id: "centroTrabalho", value: centroTrabalho },
-        { id: "ordemConcluida", value: ordemConcluida }
+        { id: "centroTrabalho", value: centroTrabalho }
     ];
 
     let erro = false;
@@ -64,7 +56,7 @@ function enviarApontamento() {
     // Verifica se os campos obrigatórios estão preenchidos e marca com borda vermelha se não estiverem
     campos.forEach(campo => {
         const element = document.getElementById(campo.id);
-        if (!campo.value || (campo.id === "ordemConcluida" && campo.value === "Não")) {
+        if (!campo.value) {
             element.style.borderColor = "red";
             erro = true;
         } else {
@@ -74,7 +66,7 @@ function enviarApontamento() {
 
     // Se houver erro, não envia o apontamento
     if (erro) {
-        alert("Todos os campos obrigatórios devem ser preenchidos e a ordem deve ser concluída.");
+        alert("Todos os campos obrigatórios devem ser preenchidos.");
         return;
     }
 
