@@ -12,13 +12,13 @@ async function buscarSolicitacao() {
         const rows = data.split("\n").map(row => row.split(","));
         const headers = rows[0];
 
-        // Encontrar a solicitação com o número
-        const solicitacao = rows.find(linha => linha[1] === numeroSolicitacao);  // A linha 1 tem o número da solicitação
+        // Encontrar a solicitação com o número digitado
+        const solicitacao = rows.find(linha => linha[1] === numeroSolicitacao);
 
         if (solicitacao) {
             let html = "<h3>Detalhes da Solicitação</h3><ul>";
 
-            // Campos de LOCAL DE INSTALAÇÃO/EQUIPAMENTO a serem verificados
+            // Lista de campos que representam locais de instalação
             const locaisEquipamento = [
                 "LOCAL DE INSTALAÇÃO/EQUIPAMENTO - AVARÉ", 
                 "LOCAL DE INSTALAÇÃO/EQUIPAMENTO - HOLAMBRA", 
@@ -32,9 +32,9 @@ async function buscarSolicitacao() {
 
             headers.forEach((header, index) => {
                 if (!header.includes("Ordem Concluída") && !header.includes("Data de Submissão")) {
-                    // Verificando se o campo de LOCAL DE INSTALAÇÃO/EQUIPAMENTO está vazio
+                    // Oculta locais de instalação vazios
                     if (locaisEquipamento.includes(header) && solicitacao[index].trim() === "") {
-                        return; // Se o campo está vazio, não exibimos esse item
+                        return;
                     }
 
                     if (header.includes("Descrição do Serviço") || header.includes("Informações Complementares")) {
@@ -60,23 +60,40 @@ async function buscarSolicitacao() {
 }
 
 function enviarApontamento() {
+    // Captura os valores dos campos
+    const numeroSolicitacao = document.getElementById("numeroSolicitacao").value;
+    const dataHoraInicial = document.getElementById("dataHoraInicial").value;
+    const dataHoraFinal = document.getElementById("dataHoraFinal").value;
+    const manutentor = document.getElementById("manutentor").value.trim();
+    const centroTrabalho = document.getElementById("centroTrabalho").value;
+    const ordemConcluida = document.getElementById("ordemConcluida").value;
+    const observacao = document.getElementById("observacao").value;
+    const imagem = document.getElementById("imagem").files[0];
+
+    // Verifica se os campos obrigatórios estão preenchidos
+    if (!dataHoraInicial || !dataHoraFinal || !manutentor || !centroTrabalho || !ordemConcluida) {
+        alert("⚠️ Preencha todos os campos obrigatórios antes de enviar o apontamento.");
+        return;
+    }
+
+    // Objeto com os dados do apontamento
     const apontamento = {
-        numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
-        dataHoraInicial: document.getElementById("dataHoraInicial").value,
-        dataHoraFinal: document.getElementById("dataHoraFinal").value,
-        manutentor: document.getElementById("manutentor").value,
-        centroTrabalho: document.getElementById("centroTrabalho").value,
-        ordemConcluida: document.getElementById("ordemConcluida").value,
-        observacao: document.getElementById("observacao").value,
-        imagem: document.getElementById("imagem").files[0]
+        numeroSolicitacao,
+        dataHoraInicial,
+        dataHoraFinal,
+        manutentor,
+        centroTrabalho,
+        ordemConcluida,
+        observacao,
+        imagem
     };
-    
+
     console.log("Dados do Apontamento:", apontamento);
-    alert("Apontamento enviado com sucesso!");
+    alert("✅ Apontamento enviado com sucesso!");
 
     // Se uma imagem for carregada, exibe o link para visualização
-    if (apontamento.imagem) {
-        const imagemLink = URL.createObjectURL(apontamento.imagem);
+    if (imagem) {
+        const imagemLink = URL.createObjectURL(imagem);
         const imagemLinkText = document.getElementById("imagemLinkText");
         imagemLinkText.href = imagemLink;
         document.getElementById("imagemLink").style.display = "block";
