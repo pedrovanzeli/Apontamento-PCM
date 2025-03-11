@@ -3,53 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Apontamento</title>
+    <title>Apontamento de Serviço</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="container">
-        <h1>Formulário de Apontamento</h1>
-        
-        <!-- Input para número da solicitação -->
+        <h1>Apontamento de Serviço</h1>
         <label for="numeroSolicitacao">Número da Solicitação:</label>
-        <input type="text" id="numeroSolicitacao" placeholder="Digite o número da solicitação">
-        <button type="button" onclick="buscarSolicitacao()">Buscar Solicitação</button>
+        <input type="text" id="numeroSolicitacao">
+        <button onclick="buscarSolicitacao()">Buscar</button>
         
-        <!-- Exibição dos dados da solicitação -->
         <div id="resultado"></div>
-
-        <!-- Formulário de Apontamento -->
-        <form id="formApontamento" style="display: none;" onsubmit="enviarApontamento(event)">
-            <h3>Apontamento</h3>
-            
-            <!-- Campos de Apontamento -->
-            <label for="dataHoraInicial">Data e Hora Inicial:</label>
+        
+        <div id="formApontamento" style="display: none;">
+            <h3>Apontamento de Serviço</h3>
+            <label>Data e Hora Inicial:</label>
             <input type="datetime-local" id="dataHoraInicial" required>
             
-            <label for="dataHoraFinal">Data e Hora Final:</label>
+            <label>Data e Hora Final:</label>
             <input type="datetime-local" id="dataHoraFinal" required>
             
-            <label for="manutentor">Manutentor:</label>
+            <label>Identificação do Manutentor:</label>
             <input type="text" id="manutentor" required>
             
-            <label for="centroTrabalho">Centro de Trabalho:</label>
+            <label>Centro de Trabalho:</label>
             <select id="centroTrabalho" required>
-                <option value="Eletrica">Eletrica</option>
-                <option value="Mecânica">Mecânica</option>
-                <!-- Adicione mais opções conforme necessário -->
+                <option value="">Selecione</option>
+                <option value="Eletrica">Elétrica</option>
+                <option value="Mecanica">Mecânica</option>
             </select>
             
-            <label for="observacao">Observação:</label>
+            <label>Ordem Concluída:</label>
+            <select id="ordemConcluida" required>
+                <option value="">Selecione</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+            </select>
+            
+            <label>Observação:</label>
             <textarea id="observacao"></textarea>
             
-            <label for="imagem">Imagem (opcional):</label>
-            <input type="file" id="imagem">
+            <label>Anexar Imagem:</label>
+            <input type="file" id="imagem" accept="image/*">
             
-            <button type="submit">Enviar Apontamento</button>
-            <button type="button" id="limpar" onclick="limparTudo()">Limpar</button>
-        </form>
+            <button onclick="enviarApontamento()">Enviar Apontamento</button>
+        </div>
+        
+        <button onclick="limparTudo()">Limpar</button>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
