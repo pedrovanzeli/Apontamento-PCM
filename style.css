@@ -1,116 +1,43 @@
-/* Estilo geral da página */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    background-image: url('c1027ad7-f2a4-45fa-98e4-7f9fd8ea4aa1.png');
-    background-size: cover;
-    background-position: center;
-    color: #333;
-}
-
-.container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: #f4f4f4;
+}
+.container {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-
-h1 {
+h1, h3 {
     text-align: center;
-    font-size: 24px;
-    color: #333;
 }
-
-h3 {
-    font-size: 20px;
-    color: #333;
-}
-
 label {
-    font-size: 14px;
+    font-weight: bold;
     display: block;
     margin-top: 10px;
-    color: #555;
 }
-
 input, select, textarea {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     margin-top: 5px;
     border-radius: 5px;
     border: 1px solid #ccc;
     box-sizing: border-box;
-    font-size: 14px;
 }
-
-input[type="datetime-local"], select {
-    width: 100%;
-}
-
-textarea {
-    height: 100px;
-    resize: vertical;
-}
-
-/* Estilo para os botões */
 button {
-    background-color: #4CAF50;
+    width: 100%;
+    padding: 10px;
+    background: #28a745;
     color: white;
     border: none;
-    padding: 10px 20px;
-    margin-top: 15px;
-    cursor: pointer;
     border-radius: 5px;
-    font-size: 14px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-button:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-}
-
-/* Estilo para campos obrigatórios e erro */
-input:invalid, select:invalid, textarea:invalid {
-    border-color: red;
-}
-
-input:valid, select:valid, textarea:valid {
-    border-color: #ccc;
-}
-
-/* Estilo para os campos obrigatórios vazios */
-input:required:invalid, select:required:invalid, textarea:required:invalid {
-    border-color: red;
-}
-
-/* Foco nos campos */
-input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: #4CAF50;
-}
-
-/* Estilo para a caixa de alerta */
-#error-message {
-    color: red;
-    font-size: 14px;
+    cursor: pointer;
     margin-top: 10px;
 }
-
-/* Estilo para a estrutura do botão de limpar */
-button#limpar {
-    background-color: #f44336;
-    margin-top: 15px;
-}
-
-button#limpar:hover {
-    background-color: #e53935;
+button:hover {
+    background: #218838;
 }
