@@ -4,25 +4,20 @@ async function buscarSolicitacao() {
 
     try {
         const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error("Erro ao carregar os dados.");
-        }
+        if (!response.ok) throw new Error("Erro ao carregar os dados.");
 
         const data = await response.text();
-        const rows = data.split("\n").map(row => row.split(","));
+        const rows = data.split("\n").map(row => row.split(",").map(cell => cell.trim()));
         const headers = rows[0];
 
-        // Encontrar a solicitação com o número digitado
         const solicitacao = rows.find(linha => linha[1] === numeroSolicitacao);
 
         if (solicitacao) {
             let html = "<h3>Detalhes da Solicitação</h3><ul>";
 
             headers.forEach((header, index) => {
-                if (!header.includes("Ordem Concluída") && !header.includes("Data de Submissão")) {
-                    if (solicitacao[index].trim()) {
-                        html += `<li><strong>${header}:</strong> ${solicitacao[index]}</li>`;
-                    }
+                if (!header.includes("Ordem Concluída") && !header.includes("Data de Submissão") && solicitacao[index]) {
+                    html += `<li><strong>${header}:</strong> ${solicitacao[index]}</li>`;
                 }
             });
 
@@ -41,6 +36,7 @@ async function buscarSolicitacao() {
 }
 
 function enviarApontamento() {
+    const agora = new Date();
     const camposObrigatorios = [
         { id: "dataHoraInicial", mensagem: "Preencha a Data e Hora Inicial." },
         { id: "dataHoraFinal", mensagem: "Preencha a Data e Hora Final." },
@@ -64,9 +60,16 @@ function enviarApontamento() {
         }
     });
 
-    if (campoInvalido) return; // Se houver erro, para o envio
+    if (campoInvalido) return;
 
-    // Criando objeto do apontamento
+    const dataHoraFinal = new Date(document.getElementById("dataHoraFinal").value);
+    if (dataHoraFinal > agora) {
+        alert("⚠️ A Data e Hora Final não pode ser maior que o momento atual.");
+        document.getElementById("dataHoraFinal").style.border = "2px solid red";
+        document.getElementById("dataHoraFinal").focus();
+        return;
+    }
+
     const apontamento = {
         numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
         dataHoraInicial: document.getElementById("dataHoraInicial").value,
@@ -81,7 +84,6 @@ function enviarApontamento() {
     console.log("✅ Dados do Apontamento:", apontamento);
     alert("✅ Apontamento enviado com sucesso!");
 
-    // Exibir o link de visualização da imagem
     if (apontamento.imagem) {
         const imagemLink = URL.createObjectURL(apontamento.imagem);
         const imagemLinkText = document.getElementById("imagemLinkText");
