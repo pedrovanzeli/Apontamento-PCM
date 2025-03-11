@@ -6,7 +6,7 @@ async function buscarSolicitacao() {
         const response = await fetch(url);
         const data = await response.text();
         
-        // Processamento do CSV garantindo que colunas com vírgulas entre aspas sejam tratadas corretamente
+        // Processamento do CSV, tratando colunas com vírgulas entre aspas corretamente
         const rows = data.split("\n").map(row => row.match(/(?:"([^"]*)")|([^,]+)/g)?.map(cell => cell.replace(/"/g, '').trim()));
         
         if (!rows || rows.length < 2) {
@@ -70,7 +70,7 @@ function enviarApontamento() {
 
     let erro = false;
 
-    // Verifica se os campos obrigatórios estão preenchidos e marca com borda vermelha se não estiverem
+    // Verifica se os campos obrigatórios estão preenchidos
     campos.forEach(campo => {
         const element = document.getElementById(campo.id);
         if (!campo.value) {
