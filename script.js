@@ -35,7 +35,7 @@ async function buscarSolicitacao() {
     }
 }
 
-function enviarApontamento() {
+async function enviarApontamento() {
     const agora = new Date();
     const camposObrigatorios = [
         { id: "dataHoraInicial", mensagem: "Preencha a Data e Hora Inicial." },
@@ -77,17 +77,23 @@ function enviarApontamento() {
         manutentor: document.getElementById("manutentor").value,
         centroTrabalho: document.getElementById("centroTrabalho").value,
         ordemConcluida: document.getElementById("ordemConcluida").value,
-        observacao: document.getElementById("observacao").value,
-        imagem: document.getElementById("imagem").files[0]
+        observacao: document.getElementById("observacao").value
     };
 
-    console.log("✅ Dados do Apontamento:", apontamento);
-    alert("✅ Apontamento enviado com sucesso!");
+    // Enviar os dados para o Google Sheets através do Google Apps Script
+    const url = "https://script.google.com/macros/s/AKfycbwDATDbe5NHQryzbpbUXpFmFv5E0sw67H8LcAu9YAPKdfTsouOUW-9G7jKeEZ9izBOPWA/exec";  // A URL correta
 
-    if (apontamento.imagem) {
-        const imagemLink = URL.createObjectURL(apontamento.imagem);
-        const imagemLinkText = document.getElementById("imagemLinkText");
-        imagemLinkText.href = imagemLink;
-        document.getElementById("imagemLink").style.display = "block";
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(apontamento)
+    });
+
+    if (response.ok) {
+        alert("✅ Apontamento enviado com sucesso!");
+    } else {
+        alert("⚠️ Ocorreu um erro ao enviar os dados.");
     }
 }
