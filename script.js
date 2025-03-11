@@ -1,29 +1,45 @@
 async function buscarSolicitacao() {
     const numeroSolicitacao = document.getElementById("numeroSolicitacao").value;
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjHfFEDNbyJxmtlGysOJb3i35Oq217kDCjU8_4pGVpzMFeOA-qtbC2vV2d_4YG_tR9bcaTue2tr39M/pub?output=csv";
-    const response = await fetch(url);
-    const data = await response.text();
-    const rows = data.split("\n").map(row => row.split(","));
-    const headers = rows[0];
-    const solicitacao = rows.find(linha => linha[1] === numeroSolicitacao);
-    
-    if (solicitacao) {
-        let html = "<h3>Detalhes da Solicitação</h3><ul>";
-        headers.forEach((header, index) => {
-            if (!header.includes("Ordem Concluída") && !header.includes("Data de Submissão") && 
-                (!header.includes("LOCAL DE INSTALAÇÃO/EQUIPAMENTO") || solicitacao[index].trim() !== "")) {
-                if (header.includes("Descrição do Serviço") || header.includes("Informações Complementares")) {
-                    html += `<li><strong>${header}:</strong><div class="scrollable">${solicitacao[index]}</div></li>`;
-                } else {
-                    html += `<li><strong>${header}:</strong> ${solicitacao[index]}</li>`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error("Erro ao carregar os dados.");
+        }
+
+        const data = await response.text();
+        const rows = data.split("\n").map(row => row.split(","));
+        const headers = rows[0];
+        
+        // Encontrar a solicitação com o número
+        const solicitacao = rows.find(linha => linha[1] === numeroSolicitacao);  // A linha 1 tem o número da solicitação
+
+        if (solicitacao) {
+            let html = "<h3>Detalhes da Solicitação</h3><ul>";
+
+            headers.forEach((header, index) => {
+                if (!header.includes("Ordem Concluída") && !header.includes("Data de Submissão") && 
+                    (!header.includes("LOCAL DE INSTALAÇÃO/EQUIPAMENTO") || solicitacao[index].trim() !== "")) {
+                    
+                    if (header.includes("Descrição do Serviço") || header.includes("Informações Complementares")) {
+                        html += `<li><strong>${header}:</strong><div class="scrollable">${solicitacao[index]}</div></li>`;
+                    } else {
+                        html += `<li><strong>${header}:</strong> ${solicitacao[index]}</li>`;
+                    }
                 }
-            }
-        });
-        html += "</ul>";
-        document.getElementById("resultado").innerHTML = html;
-        document.getElementById("formApontamento").style.display = "block";
-    } else {
-        document.getElementById("resultado").innerHTML = "<p>Solicitação não encontrada.</p>";
+            });
+
+            html += "</ul>";
+            document.getElementById("resultado").innerHTML = html;
+            document.getElementById("formApontamento").style.display = "block";
+        } else {
+            document.getElementById("resultado").innerHTML = "<p>Solicitação não encontrada.</p>";
+            document.getElementById("formApontamento").style.display = "none";
+        }
+    } catch (error) {
+        console.error("Erro ao buscar solicitação:", error);
+        document.getElementById("resultado").innerHTML = "<p>Ocorreu um erro ao carregar os dados.</p>";
         document.getElementById("formApontamento").style.display = "none";
     }
 }
