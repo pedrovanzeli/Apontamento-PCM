@@ -12,7 +12,11 @@ async function buscarSolicitacao() {
         headers.forEach((header, index) => {
             if (!header.includes("Ordem Concluída") && !header.includes("Data de Submissão") && 
                 (!header.includes("LOCAL DE INSTALAÇÃO/EQUIPAMENTO") || solicitacao[index].trim() !== "")) {
-                html += `<li><strong>${header}:</strong> ${solicitacao[index]}</li>`;
+                if (header.includes("Descrição do Serviço") || header.includes("Informações Complementares")) {
+                    html += `<li><strong>${header}:</strong><div class="scrollable">${solicitacao[index]}</div></li>`;
+                } else {
+                    html += `<li><strong>${header}:</strong> ${solicitacao[index]}</li>`;
+                }
             }
         });
         html += "</ul>";
@@ -31,10 +35,19 @@ function enviarApontamento() {
         dataHoraFinal: document.getElementById("dataHoraFinal").value,
         manutentor: document.getElementById("manutentor").value,
         centroTrabalho: document.getElementById("centroTrabalho").value,
+        ordemConcluida: document.getElementById("ordemConcluida").value,
         observacao: document.getElementById("observacao").value,
         imagem: document.getElementById("imagem").files[0]
     };
     
     console.log("Dados do Apontamento:", apontamento);
     alert("Apontamento enviado com sucesso!");
+
+    // Se uma imagem for carregada, exibe o link para visualização
+    if (apontamento.imagem) {
+        const imagemLink = URL.createObjectURL(apontamento.imagem);
+        const imagemLinkText = document.getElementById("imagemLinkText");
+        imagemLinkText.href = imagemLink;
+        document.getElementById("imagemLink").style.display = "block";
+    }
 }
