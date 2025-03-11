@@ -1,12 +1,17 @@
+/* Garantir que a imagem de fundo cubra toda a tela */
+html, body {
+    height: 100%;  /* Garante que o body ocupe toda a altura da janela */
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
     background-color: #f4f4f4;
     background-image: url('c1027ad7-f2a4-45fa-98e4-7f9fd8ea4aa1.png');
-    background-size: cover;  /* Ajusta a imagem para cobrir toda a área */
+    background-size: cover;  /* Ajusta a imagem para cobrir toda a tela */
     background-position: center;  /* Centraliza a imagem */
-    background-repeat: no-repeat;  /* Evita a repetição da imagem */
+    background-repeat: no-repeat;  /* Impede a repetição da imagem */
 }
 
 .container {
@@ -69,4 +74,25 @@ button:hover {
 
 #imagemLink a:hover {
     text-decoration: underline;
+}
+
+/* Estilo para o rodapé */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+footer h3 {
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+footer p {
+    font-size: 1em;
+    margin: 5px 0;
 }
