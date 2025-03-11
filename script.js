@@ -11,17 +11,32 @@ async function buscarSolicitacao() {
         const data = await response.text();
         const rows = data.split("\n").map(row => row.split(","));
         const headers = rows[0];
-        
+
         // Encontrar a solicitação com o número
         const solicitacao = rows.find(linha => linha[1] === numeroSolicitacao);  // A linha 1 tem o número da solicitação
 
         if (solicitacao) {
             let html = "<h3>Detalhes da Solicitação</h3><ul>";
 
+            // Campos de LOCAL DE INSTALAÇÃO/EQUIPAMENTO a serem verificados
+            const locaisEquipamento = [
+                "LOCAL DE INSTALAÇÃO/EQUIPAMENTO - AVARÉ", 
+                "LOCAL DE INSTALAÇÃO/EQUIPAMENTO - HOLAMBRA", 
+                "LOCAL DE INSTALAÇÃO/EQUIPAMENTO - ITABERÁ II", 
+                "LOCAL DE INSTALAÇÃO/EQUIPAMENTO - SÃO MANUEL", 
+                "LOCAL DE INSTALAÇÃO/EQUIPAMENTO - TAKAOKA", 
+                "LOCAL DE INSTALAÇÃO/EQUIPAMENTO - TAQUARI", 
+                "LOCAL DE INSTALAÇÃO/EQUIPAMENTO - TAQUARITUBA", 
+                "LOCAL DE INSTALAÇÃO/EQUIPAMENTO - TAQUARIVAÍ"
+            ];
+
             headers.forEach((header, index) => {
-                if (!header.includes("Ordem Concluída") && !header.includes("Data de Submissão") && 
-                    (!header.includes("LOCAL DE INSTALAÇÃO/EQUIPAMENTO") || solicitacao[index].trim() !== "")) {
-                    
+                if (!header.includes("Ordem Concluída") && !header.includes("Data de Submissão")) {
+                    // Verificando se o campo de LOCAL DE INSTALAÇÃO/EQUIPAMENTO está vazio
+                    if (locaisEquipamento.includes(header) && solicitacao[index].trim() === "") {
+                        return; // Se o campo está vazio, não exibimos esse item
+                    }
+
                     if (header.includes("Descrição do Serviço") || header.includes("Informações Complementares")) {
                         html += `<li><strong>${header}:</strong><div class="scrollable">${solicitacao[index]}</div></li>`;
                     } else {
