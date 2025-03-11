@@ -1,27 +1,44 @@
 async function buscarSolicitacao() {
-    const numeroSolicitacao = document.getElementById("numeroSolicitacao").value;
+    const numeroSolicitacao = document.getElementById("numeroSolicitacao").value.trim();
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjHfFEDNbyJxmtlGysOJb3i35Oq217kDCjU8_4pGVpzMFeOA-qtbC2vV2d_4YG_tR9bcaTue2tr39M/pub?output=csv";
     
-    const response = await fetch(url);
-    const data = await response.text();
-    const rows = data.split("\n").map(row => row.split(","));
-    
-    const headers = rows[0];
-    const solicitacao = rows.find(row => row[1] === numeroSolicitacao);
-    
-    if (solicitacao) {
-        let html = "<h3>Detalhes da Solicitação</h3><ul>";
-        headers.forEach((header, index) => {
-            if (!header.includes("Ordem Concluída") && !header.includes("Submission Date") && (!header.includes("LOCAL DE INSTALAÇÃO/EQUIPAMENTO") || solicitacao[index].trim() !== "")) {
-                html += `<li><strong>${header}:</strong> ${solicitacao[index]}</li>`;
-            }
-        });
-        html += "</ul>";
-        document.getElementById("resultado").innerHTML = html;
-        document.getElementById("formApontamento").style.display = "block";
-    } else {
-        document.getElementById("resultado").innerHTML = "<p>Solicitação não encontrada.</p>";
-        document.getElementById("formApontamento").style.display = "none";
+    try {
+        const response = await fetch(url);
+        const data = await response.text();
+        
+        // Processamento do CSV garantindo que colunas com vírgulas entre aspas sejam tratadas corretamente
+        const rows = data.split("\n").map(row => row.match(/(?:"([^"]*)")|([^,]+)/g)?.map(cell => cell.replace(/"/g, '').trim()));
+        
+        if (!rows || rows.length < 2) {
+            throw new Error("Formato do CSV inválido");
+        }
+        
+        const headers = rows[0];
+        const solicitacao = rows.find(row => row[1] && row[1].trim() === numeroSolicitacao);
+        
+        if (solicitacao) {
+            let html = "<h3>Detalhes da Solicitação</h3><ul>";
+            
+            headers.forEach((header, index) => {
+                const valor = solicitacao[index] ? solicitacao[index].trim() : "";
+                
+                if (!header.includes("Ordem Concluída") && 
+                    !header.includes("Submission Date") && 
+                    (!header.includes("LOCAL DE INSTALAÇÃO/EQUIPAMENTO") || valor !== "")) {
+                    html += `<li><strong>${header}:</strong> ${valor}</li>`;
+                }
+            });
+            
+            html += "</ul>";
+            document.getElementById("resultado").innerHTML = html;
+            document.getElementById("formApontamento").style.display = "block";
+        } else {
+            document.getElementById("resultado").innerHTML = "<p>Solicitação não encontrada.</p>";
+            document.getElementById("formApontamento").style.display = "none";
+        }
+    } catch (error) {
+        console.error("Erro ao buscar os dados:", error);
+        document.getElementById("resultado").innerHTML = "<p>Erro ao buscar os dados. Tente novamente mais tarde.</p>";
     }
 }
 
