@@ -34,7 +34,6 @@ async function buscarSolicitacao() {
         document.getElementById("formApontamento").style.display = "none";
     }
 }
-
 async function enviarApontamento() {
     const agora = new Date();
     const camposObrigatorios = [
@@ -97,3 +96,4 @@ async function enviarApontamento() {
         alert("⚠️ Ocorreu um erro ao enviar os dados.");
     }
 }
+
