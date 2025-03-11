@@ -34,8 +34,7 @@ async function buscarSolicitacao() {
         document.getElementById("formApontamento").style.display = "none";
     }
 }
-
-function enviarApontamento() {
+async function enviarApontamento() {
     const agora = new Date();
     const camposObrigatorios = [
         { id: "dataHoraInicial", mensagem: "Preencha a Data e Hora Inicial." },
@@ -70,6 +69,7 @@ function enviarApontamento() {
         return;
     }
 
+    // Captura os dados do formulário
     const apontamento = {
         numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
         dataHoraInicial: document.getElementById("dataHoraInicial").value,
@@ -77,20 +77,53 @@ function enviarApontamento() {
         manutentor: document.getElementById("manutentor").value,
         centroTrabalho: document.getElementById("centroTrabalho").value,
         ordemConcluida: document.getElementById("ordemConcluida").value,
-        observacao: document.getElementById("observacao").value,
-        imagem: document.getElementById("imagem").files[0]
+        observacao: document.getElementById("observacao").value
     };
 
-    console.log("✅ Dados do Apontamento:", apontamento);
-    alert("✅ Apontamento enviado com sucesso!");
+    // Verifica se há imagem anexada
+    const imagemInput = document.getElementById("imagem");
+    if (imagemInput.files.length > 0) {
+        const imagem = imagemInput.files[0];
+        const formData = new FormData();
+        formData.append("file", imagem);
 
-    // Desabilitar o botão após o envio
-    document.querySelector('button').disabled = true;
+        try {
+            const uploadResponse = await fetch("https://api.imgbb.com/1/upload?key=SUA_CHAVE_IMGBB", {
+                method: "POST",
+                body: formData
+            });
 
-    if (apontamento.imagem) {
-        const imagemLink = URL.createObjectURL(apontamento.imagem);
-        const imagemLinkText = document.getElementById("imagemLinkText");
-        imagemLinkText.href = imagemLink;
-        document.getElementById("imagemLink").style.display = "block";
+            const uploadResult = await uploadResponse.json();
+            if (uploadResult.success) {
+                apontamento.imagemLink = uploadResult.data.url;
+            } else {
+                apontamento.imagemLink = "Erro no upload";
+            }
+        } catch (error) {
+            console.error("Erro no upload da imagem:", error);
+            apontamento.imagemLink = "Erro no upload";
+        }
+    }
+
+    try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbwDATDbe5NHQryzbpbUXpFmFv5E0sw67H8LcAu9YAPKdfTsouOUW-9G7jKeEZ9izBOPWA/exec", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(apontamento)
+        });
+
+        const result = await response.json();
+        if (result.status === "sucesso") {
+            alert("✅ Apontamento enviado com sucesso!");
+            document.getElementById("formApontamento").reset();
+        } else {
+            alert("❌ Erro ao enviar o apontamento: " + result.mensagem);
+        }
+    } catch (error) {
+        console.error("Erro ao enviar apontamento:", error);
+        alert("❌ Erro ao enviar os dados.");
     }
 }
+
