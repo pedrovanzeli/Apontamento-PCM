@@ -27,10 +27,18 @@
                 <option value="Eletrica">Elétrica</option>
                 <option value="Mecanica">Mecânica</option>
             </select>
+            <label>Ordem Concluída:</label>
+            <select id="ordemConcluida">
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+            </select>
             <label>Observação:</label>
             <textarea id="observacao"></textarea>
             <label>Anexar Imagem:</label>
             <input type="file" id="imagem" accept="image/*">
+            <div id="imagemLink" style="display: none;">
+                <a id="imagemLinkText" href="#" target="_blank">Clique para visualizar a imagem anexada</a>
+            </div>
             <button onclick="enviarApontamento()">Enviar Apontamento</button>
         </div>
     </div>
