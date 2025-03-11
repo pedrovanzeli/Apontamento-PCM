@@ -54,6 +54,11 @@ input[type="datetime-local"], select {
 textarea {
     height: 100px;
     resize: vertical;
+    overflow-y: auto;  /* Exibe barra de rolagem vertical quando necessário */
+}
+
+#descricaoServico, #informacoesComplementares, #observacao {
+    min-height: 120px;  /* Define um tamanho mínimo */
 }
 
 /* Estilo para os botões */
