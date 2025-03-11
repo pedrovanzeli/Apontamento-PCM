@@ -47,3 +47,22 @@ button {
 button:hover {
     background-color: #218838;
 }
+
+.scrollable {
+    max-height: 100px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+#imagemLink {
+    margin-top: 10px;
+}
+
+#imagemLink a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+#imagemLink a:hover {
+    text-decoration: underline;
+}
