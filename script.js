@@ -60,40 +60,58 @@ async function buscarSolicitacao() {
 }
 
 function enviarApontamento() {
-    // Captura os valores dos campos
-    const numeroSolicitacao = document.getElementById("numeroSolicitacao").value;
-    const dataHoraInicial = document.getElementById("dataHoraInicial").value;
-    const dataHoraFinal = document.getElementById("dataHoraFinal").value;
-    const manutentor = document.getElementById("manutentor").value.trim();
-    const centroTrabalho = document.getElementById("centroTrabalho").value;
-    const ordemConcluida = document.getElementById("ordemConcluida").value;
-    const observacao = document.getElementById("observacao").value;
-    const imagem = document.getElementById("imagem").files[0];
+    // Captura os valores dos campos obrigatórios
+    const dataHoraInicial = document.getElementById("dataHoraInicial");
+    const dataHoraFinal = document.getElementById("dataHoraFinal");
+    const manutentor = document.getElementById("manutentor");
+    const centroTrabalho = document.getElementById("centroTrabalho");
+    const ordemConcluida = document.getElementById("ordemConcluida");
 
-    // Verifica se os campos obrigatórios estão preenchidos
-    if (!dataHoraInicial || !dataHoraFinal || !manutentor || !centroTrabalho || !ordemConcluida) {
-        alert("⚠️ Preencha todos os campos obrigatórios antes de enviar o apontamento.");
+    // Verifica se algum campo obrigatório está vazio
+    if (!dataHoraInicial.value) {
+        alert("⚠️ Por favor, preencha a Data e Hora Inicial.");
+        dataHoraInicial.focus();
+        return;
+    }
+    if (!dataHoraFinal.value) {
+        alert("⚠️ Por favor, preencha a Data e Hora Final.");
+        dataHoraFinal.focus();
+        return;
+    }
+    if (!manutentor.value.trim()) {
+        alert("⚠️ Por favor, preencha a Identificação do Manutentor.");
+        manutentor.focus();
+        return;
+    }
+    if (!centroTrabalho.value) {
+        alert("⚠️ Por favor, selecione o Centro de Trabalho.");
+        centroTrabalho.focus();
+        return;
+    }
+    if (!ordemConcluida.value) {
+        alert("⚠️ Por favor, selecione se a Ordem foi Concluída.");
+        ordemConcluida.focus();
         return;
     }
 
-    // Objeto com os dados do apontamento
+    // Criando o objeto do apontamento
     const apontamento = {
-        numeroSolicitacao,
-        dataHoraInicial,
-        dataHoraFinal,
-        manutentor,
-        centroTrabalho,
-        ordemConcluida,
-        observacao,
-        imagem
+        numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
+        dataHoraInicial: dataHoraInicial.value,
+        dataHoraFinal: dataHoraFinal.value,
+        manutentor: manutentor.value,
+        centroTrabalho: centroTrabalho.value,
+        ordemConcluida: ordemConcluida.value,
+        observacao: document.getElementById("observacao").value,
+        imagem: document.getElementById("imagem").files[0]
     };
 
-    console.log("Dados do Apontamento:", apontamento);
+    console.log("✅ Dados do Apontamento:", apontamento);
     alert("✅ Apontamento enviado com sucesso!");
 
-    // Se uma imagem for carregada, exibe o link para visualização
-    if (imagem) {
-        const imagemLink = URL.createObjectURL(imagem);
+    // Se houver uma imagem anexada, criar o link de visualização
+    if (apontamento.imagem) {
+        const imagemLink = URL.createObjectURL(apontamento.imagem);
         const imagemLinkText = document.getElementById("imagemLinkText");
         imagemLinkText.href = imagemLink;
         document.getElementById("imagemLink").style.display = "block";
