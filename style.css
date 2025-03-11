@@ -1,9 +1,12 @@
+/* Estilo Geral */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
     background-color: #f4f4f4;
 }
+
+/* Container Principal */
 .container {
     max-width: 500px;
     margin: auto;
@@ -12,14 +15,20 @@ body {
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Títulos */
 h1, h3 {
     text-align: center;
 }
+
+/* Estilo das Labels */
 label {
     font-weight: bold;
     display: block;
     margin-top: 10px;
 }
+
+/* Estilo dos Campos de Formulário */
 input, select, textarea {
     width: 100%;
     padding: 8px;
@@ -28,6 +37,8 @@ input, select, textarea {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+
+/* Botões */
 button {
     width: 100%;
     padding: 10px;
@@ -38,6 +49,50 @@ button {
     cursor: pointer;
     margin-top: 10px;
 }
+
 button:hover {
     background: #218838;
+}
+
+/* Estilo do Resultado da Busca */
+#resultado ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Estilo dos Itens da Lista */
+#resultado li {
+    word-wrap: break-word;  /* Faz o texto longo quebrar para a próxima linha */
+    word-break: break-word; /* Evita que as palavras sejam cortadas no meio */
+    overflow-wrap: break-word; /* Outra propriedade que ajuda na quebra de palavras */
+    margin-bottom: 8px;
+}
+
+/* Limitar a largura das labels */
+#resultado li strong {
+    display: inline-block;
+    width: 150px; /* Limita o tamanho da label */
+    font-weight: bold;
+}
+
+/* Estilo do container de resultado */
+#resultado {
+    max-height: 400px; /* Limita a altura do container do resultado */
+    overflow-y: auto;  /* Adiciona barra de rolagem vertical se o conteúdo for grande */
+}
+
+/* Formulário de Apontamento */
+#formApontamento {
+    margin-top: 20px;
+    display: none;
+}
+
+/* Input de Arquivo */
+input[type="file"] {
+    margin-top: 10px;
+}
+
+/* Estilo para o campo de observações */
+textarea {
+    height: 100px;  /* Dá altura para o campo de observações */
 }
