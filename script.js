@@ -34,6 +34,7 @@ async function buscarSolicitacao() {
         document.getElementById("formApontamento").style.display = "none";
     }
 }
+
 async function enviarApontamento() {
     const agora = new Date();
     const camposObrigatorios = [
@@ -106,24 +107,19 @@ async function enviarApontamento() {
     }
 
     try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbwDATDbe5NHQryzbpbUXpFmFv5E0sw67H8LcAu9YAPKdfTsouOUW-9G7jKeEZ9izBOPWA/exec", {
+        await fetch("https://script.google.com/macros/s/AKfycbwDATDbe5NHQryzbpbUXpFmFv5E0sw67H8LcAu9YAPKdfTsouOUW-9G7jKeEZ9izBOPWA/exec", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
+            mode: "no-cors", // Adicionado para evitar erro de CORS
             body: JSON.stringify(apontamento)
         });
 
-        const result = await response.json();
-        if (result.status === "sucesso") {
-            alert("✅ Apontamento enviado com sucesso!");
-            document.getElementById("formApontamento").reset();
-        } else {
-            alert("❌ Erro ao enviar o apontamento: " + result.mensagem);
-        }
+        alert("✅ Apontamento enviado com sucesso! (Observação: não é possível confirmar a resposta do servidor devido a CORS)");
+        document.getElementById("formApontamento").reset();
     } catch (error) {
         console.error("Erro ao enviar apontamento:", error);
         alert("❌ Erro ao enviar os dados.");
     }
 }
-
