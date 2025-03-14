@@ -6,8 +6,11 @@
     <title>Apontamento de Serviço</title>
     <link rel="stylesheet" href="style.css">
     <!-- Adicionando as bibliotecas do Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script type="module">
+        // Importando as funções do Firebase modular
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    </script>
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -70,10 +73,10 @@
             messagingSenderId: "359651627373",
             appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
         };
-        
+
         // Inicialize o Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
         async function enviarApontamento() {
             const agora = new Date();
@@ -148,7 +151,7 @@
 
             try {
                 // Salvar no Firestore
-                await db.collection("apontamentos").add(apontamento);
+                await addDoc(collection(db, "apontamentos"), apontamento);
 
                 alert("✅ Apontamento enviado com sucesso!");
                 document.getElementById("formApontamento").reset();
