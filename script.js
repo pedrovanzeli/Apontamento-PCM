@@ -51,23 +51,21 @@ async function buscarSolicitacao() {
 }
 
 // Função para enviar apontamento
-async function enviarApontamento() {
-    const apontamento = {
-        numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
-        dataHoraInicial: document.getElementById("dataHoraInicial").value,
-        dataHoraFinal: document.getElementById("dataHoraFinal").value,
-        manutentor: document.getElementById("manutentor").value,
-        centroTrabalho: document.getElementById("centroTrabalho").value,
-        ordemConcluida: document.getElementById("ordemConcluida").value,
-        observacao: document.getElementById("observacao").value
-    };
+async function enviarParaJotform() {
+    // Coleta os dados do formulário com os novos nomes de campo
+    const numeroOrdem = document.getElementById("numeroSolicitacao").value;
+    const descricaoServico = document.getElementById("descricaoServico").value; // Atualize conforme necessário
+    const setor = document.getElementById("setor").value; // Atualize conforme necessário
+    const manutentor = document.getElementById("manutentor").value;
+    const centroTrabalho = document.getElementById("centroTrabalho").value;
+    const ordemConcluida = document.getElementById("ordemConcluida").value;
+    const observacoes = document.getElementById("observacao").value;
+    const dataHoraInicial = document.getElementById("dataHoraInicial").value;
+    const dataHoraFinal = document.getElementById("dataHoraFinal").value;
 
-    try {
-        await db.collection("apontamentos").add(apontamento);
-        alert("✅ Apontamento enviado com sucesso!");
-        document.getElementById("formApontamento").reset();
-    } catch (error) {
-        console.error("❌ Erro ao enviar apontamento:", error);
-        alert("❌ Erro ao enviar os dados.");
-    }
+    // Construindo a URL do Jotform com os novos dados
+    const jotformUrl = `https://form.jotform.com/250724680785667?numeroOrdem=${encodeURIComponent(numeroOrdem)}&descricaoServico=${encodeURIComponent(descricaoServico)}&setor=${encodeURIComponent(setor)}&manutentor=${encodeURIComponent(manutentor)}&centroTrabalho=${encodeURIComponent(centroTrabalho)}&ordemConcluida=${encodeURIComponent(ordemConcluida)}&observacoes=${encodeURIComponent(observacoes)}&dataHoraInicial=${encodeURIComponent(dataHoraInicial)}&dataHoraFinal=${encodeURIComponent(dataHoraFinal)}`;
+
+    // Redireciona para o Jotform com os dados
+    window.location.href = jotformUrl;
 }
