@@ -1,18 +1,20 @@
+// Importação do Firebase no formato modular
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
 // Configuração do Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyAUlxHPDSkSDoiXA4eg5BUW9sRxZfz9GI8",
-  authDomain: "apontamento-pcm-2fb0e.firebaseapp.com",
-  projectId: "apontamento-pcm-2fb0e",
-  storageBucket: "apontamento-pcm-2fb0e.firebasestorage.app",
-  messagingSenderId: "359651627373",
-  appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
+    apiKey: "AIzaSyAUlxHPDSkSDoiXA4eg5BUW9sRxZfz9GI8",
+    authDomain: "apontamento-pcm-2fb0e.firebaseapp.com",
+    projectId: "apontamento-pcm-2fb0e",
+    storageBucket: "apontamento-pcm-2fb0e.firebasestorage.app",
+    messagingSenderId: "359651627373",
+    appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
 };
 
-// Inicialize o Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Obtenha a referência ao Firestore após a inicialização
-const db = firebase.firestore();
+// Inicializa o Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 // Função para buscar solicitação
 async function buscarSolicitacao() {
@@ -104,7 +106,7 @@ async function enviarApontamento() {
     if (imagemInput.files.length > 0) {
         const imagem = imagemInput.files[0];
         const formData = new FormData();
-        formData.append("file", imagem);
+        formData.append("image", imagem);
 
         try {
             const uploadResponse = await fetch("https://api.imgbb.com/1/upload?key=SUA_CHAVE_IMGBB", {
@@ -115,6 +117,8 @@ async function enviarApontamento() {
             const uploadResult = await uploadResponse.json();
             if (uploadResult.success) {
                 apontamento.imagemLink = uploadResult.data.url;
+                document.getElementById("imagemLinkText").href = uploadResult.data.url;
+                document.getElementById("imagemLink").style.display = "block";
             } else {
                 apontamento.imagemLink = "Erro no upload";
             }
@@ -126,7 +130,7 @@ async function enviarApontamento() {
 
     // Envia o apontamento para o Firebase Firestore
     try {
-        await db.collection("apontamentos").add(apontamento);
+        await addDoc(collection(db, "apontamentos"), apontamento);
         alert("✅ Apontamento enviado com sucesso!");
         document.getElementById("formApontamento").reset();
     } catch (error) {
@@ -134,3 +138,7 @@ async function enviarApontamento() {
         alert("❌ Erro ao enviar os dados.");
     }
 }
+
+// Disponibiliza as funções globalmente para serem chamadas pelo HTML
+window.buscarSolicitacao = buscarSolicitacao;
+window.enviarApontamento = enviarApontamento;
