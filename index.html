@@ -47,7 +47,17 @@
             <div id="imagemLink" style="display: none;">
                 <a id="imagemLinkText" href="#" target="_blank">Clique para visualizar a imagem anexada</a>
             </div>
-            <button onclick="enviarApontamento()">Enviar Apontamento</button>
+
+            <!-- Pergunta de finalização -->
+            <h3>Apontamento Finalizado?</h3>
+            <button onclick="verificarFinalizacao(true)">Sim</button>
+            <button onclick="verificarFinalizacao(false)">Não</button>
+
+            <!-- Mensagem de revisão -->
+            <div id="revisaoMensagem" style="display: none;">
+                <p><strong>Por favor, revise as informações preenchidas antes de finalizar o apontamento.</strong></p>
+                <button onclick="revisarInformacoes()">Revisar</button>
+            </div>
         </div>
     </div>
 
@@ -60,5 +70,44 @@
             <p>Rod. Raposo Tavares, km 256 - Holambra II, Paranapanema - SP, 18725-000</p>
         </div>
     </footer>
+
+    <script>
+        // Função para verificar se o apontamento foi finalizado
+        function verificarFinalizacao(isFinalizado) {
+            if (isFinalizado) {
+                // Se for "Sim", redireciona para o Jotform com os dados preenchidos
+                enviarParaJotform();
+            } else {
+                // Se for "Não", exibe mensagem de revisão
+                document.getElementById("revisaoMensagem").style.display = "block";
+            }
+        }
+
+        // Função para revisar informações
+        function revisarInformacoes() {
+            alert("🔴 Por favor, revise e ajuste os campos antes de enviar.");
+            // Aqui você pode focar nos campos que precisam de revisão ou pedir mais detalhes.
+        }
+
+        // Função para enviar os dados para o Jotform com os campos preenchidos
+        async function enviarParaJotform() {
+            // Coleta os dados do formulário
+            const numeroOrdem = document.getElementById("numeroSolicitacao").value;
+            const descricaoServico = document.getElementById("descricaoServico").value;
+            const setor = document.getElementById("setor").value;
+            const manutentor = document.getElementById("manutentor").value;
+            const centroTrabalho = document.getElementById("centroTrabalho").value;
+            const ordemConcluida = document.getElementById("ordemConcluida").value;
+            const observacoes = document.getElementById("observacao").value;
+            const dataHoraInicial = document.getElementById("dataHoraInicial").value;
+            const dataHoraFinal = document.getElementById("dataHoraFinal").value;
+
+            // Construindo a URL do Jotform com os dados
+            const jotformUrl = `https://form.jotform.com/250724680785667?numeroOrdem=${encodeURIComponent(numeroOrdem)}&descricaoServico=${encodeURIComponent(descricaoServico)}&setor=${encodeURIComponent(setor)}&manutentor=${encodeURIComponent(manutentor)}&centroTrabalho=${encodeURIComponent(centroTrabalho)}&ordemConcluida=${encodeURIComponent(ordemConcluida)}&observacoes=${encodeURIComponent(observacoes)}&dataHoraInicial=${encodeURIComponent(dataHoraInicial)}&dataHoraFinal=${encodeURIComponent(dataHoraFinal)}`;
+
+            // Redireciona para o Jotform com os dados
+            window.location.href = jotformUrl;
+        }
+    </script>
 </body>
 </html>
