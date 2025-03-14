@@ -1,17 +1,3 @@
-// 1. Configuração do Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyAUlxHPDSkSDoiXA4eg5BUW9sRxZfz9GI8",
-    authDomain: "apontamento-pcm-2fb0e.firebaseapp.com",
-    projectId: "apontamento-pcm-2fb0e",
-    storageBucket: "apontamento-pcm-2fb0e.firebasestorage.app",
-    messagingSenderId: "359651627373",
-    appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
-};
-
-// Inicialize o Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore(app);
-
 async function buscarSolicitacao() {
     const numeroSolicitacao = document.getElementById("numeroSolicitacao").value.trim();
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjHfFEDNbyJxmtlGysOJb3i35Oq217kDCjU8_4pGVpzMFeOA-qtbC2vV2d_4YG_tR9bcaTue2tr39M/pub?output=csv";
@@ -131,3 +117,16 @@ async function enviarApontamento() {
         alert("❌ Erro ao enviar os dados.");
     }
 }
+// 1. Configuração do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyAUlxHPDSkSDoiXA4eg5BUW9sRxZfz9GI8",
+    authDomain: "apontamento-pcm-2fb0e.firebaseapp.com",
+    projectId: "apontamento-pcm-2fb0e",
+    storageBucket: "apontamento-pcm-2fb0e.firebasestorage.app",
+    messagingSenderId: "359651627373",
+    appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
+};
+
+// Inicialize o Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(app);
