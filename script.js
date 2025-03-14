@@ -95,9 +95,9 @@ function verificarApontamentoFinalizado(resposta) {
             return; // Interrompe a execução e não redireciona
         }
 
-        // Criando a mensagem para o WhatsApp com os dados do apontamento
-        const mensagem = `
-            *Apontamento de Serviço*\n
+        // Construindo a URL do WhatsApp com os dados
+        const whatsappMessage = `
+            *Apontamento de Serviço*\n\n
             *Número da Ordem:* ${numeroOrdem}\n
             *Descrição do Serviço:* ${descricaoServico}\n
             *Setor:* ${setor}\n
@@ -105,15 +105,14 @@ function verificarApontamentoFinalizado(resposta) {
             *Centro de Trabalho:* ${centroTrabalho}\n
             *Ordem Concluída:* ${ordemConcluida}\n
             *Observações:* ${observacoes}\n
-            *Data e Hora Inicial:* ${dataHoraInicial}\n
-            *Data e Hora Final:* ${dataHoraFinal}
-        `;
+            *Data Hora Inicial:* ${dataHoraInicial}\n
+            *Data Hora Final:* ${dataHoraFinal}\n
+        `.trim().replace(/\n/g, '%0A').replace(/\*/g, '%2A');
 
-        // Criando o link do WhatsApp com a mensagem
-        const whatsappUrl = `https://wa.me/5511XXXXXXXXX?text=${encodeURIComponent(mensagem)}`;
+        const whatsappUrl = `https://wa.me/5514997350331?text=${whatsappMessage}`;
 
         // Redireciona para o WhatsApp com os dados preenchidos
-        window.location.href = whatsappUrl;
+        window.open(whatsappUrl, "_blank");
     } else {
         // Caso a resposta seja "Não", peça para revisar os dados
         alert("Por favor, revise as informações antes de finalizar.");
