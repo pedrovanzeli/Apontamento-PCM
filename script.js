@@ -1,9 +1,6 @@
-// Verifica se o Firebase já foi carregado
-if (typeof firebase === "undefined") {
-    console.error("🔥 ERRO: O Firebase não foi carregado. Verifique a importação no HTML.");
-} else {
-    console.log("✅ Firebase carregado corretamente.");
-}
+// Agora usamos módulos do Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -15,11 +12,11 @@ const firebaseConfig = {
     appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
 };
 
-// Inicializa o Firebase e garante que ele esteja pronto antes de acessar o Firestore
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+// Inicializa o Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-console.log("✅ Firebase inicializado com sucesso:", firebase.apps.length > 0);
+console.log("✅ Firebase inicializado com sucesso!");
 
 // Função para buscar solicitação
 async function buscarSolicitacao() {
@@ -59,11 +56,6 @@ async function buscarSolicitacao() {
 
 // Função para enviar apontamento
 async function enviarApontamento() {
-    if (!firebase.apps.length) {
-        console.error("🔥 Firebase não está inicializado corretamente!");
-        return;
-    }
-
     const apontamento = {
         numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
         dataHoraInicial: document.getElementById("dataHoraInicial").value,
@@ -75,7 +67,7 @@ async function enviarApontamento() {
     };
 
     try {
-        await db.collection("apontamentos").add(apontamento);
+        await addDoc(collection(db, "apontamentos"), apontamento);
         alert("✅ Apontamento enviado com sucesso!");
         document.getElementById("formApontamento").reset();
     } catch (error) {
@@ -83,3 +75,6 @@ async function enviarApontamento() {
         alert("❌ Erro ao enviar os dados.");
     }
 }
+
+// Evento no botão para evitar problemas de carregamento
+document.getElementById("btnEnviar").addEventListener("click", enviarApontamento);
