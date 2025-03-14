@@ -107,26 +107,19 @@ async function enviarApontamento() {
     }
 
     try {
-        // Salvar no Firestore
-        await db.collection("apontamentos").add(apontamento);
+        await fetch("https://script.google.com/macros/s/AKfycbwDATDbe5NHQryzbpbUXpFmFv5E0sw67H8LcAu9YAPKdfTsouOUW-9G7jKeEZ9izBOPWA/exec", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            mode: "no-cors", // Adicionado para evitar erro de CORS
+            body: JSON.stringify(apontamento)
+        });
 
-        alert("✅ Apontamento enviado com sucesso!");
+        alert("✅ Apontamento enviado com sucesso! (Observação: não é possível confirmar a resposta do servidor devido a CORS)");
         document.getElementById("formApontamento").reset();
     } catch (error) {
         console.error("Erro ao enviar apontamento:", error);
         alert("❌ Erro ao enviar os dados.");
     }
 }
-// 1. Configuração do Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyAUlxHPDSkSDoiXA4eg5BUW9sRxZfz9GI8",
-    authDomain: "apontamento-pcm-2fb0e.firebaseapp.com",
-    projectId: "apontamento-pcm-2fb0e",
-    storageBucket: "apontamento-pcm-2fb0e.firebasestorage.app",
-    messagingSenderId: "359651627373",
-    appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
-};
-
-// Inicialize o Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore(app);
