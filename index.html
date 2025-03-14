@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apontamento de Serviço</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Adicionando as bibliotecas do Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -56,5 +59,105 @@
             <p>Rod. Raposo Tavares, km 256 - Holambra II, Paranapanema - SP, 18725-000</p>
         </div>
     </footer>
+
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY",
+            authDomain: "SEU_AUTH_DOMAIN",
+            projectId: "SEU_PROJECT_ID",
+            storageBucket: "SEU_STORAGE_BUCKET",
+            messagingSenderId: "SEU_MESSAGING_SENDER_ID",
+            appId: "SEU_APP_ID",
+            measurementId: "SEU_MEASUREMENT_ID"
+        };
+        
+        // Inicialize o Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore(app);
+
+        async function enviarApontamento() {
+            const agora = new Date();
+            const camposObrigatorios = [
+                { id: "dataHoraInicial", mensagem: "Preencha a Data e Hora Inicial." },
+                { id: "dataHoraFinal", mensagem: "Preencha a Data e Hora Final." },
+                { id: "manutentor", mensagem: "Preencha a Identificação do Manutentor." },
+                { id: "centroTrabalho", mensagem: "Selecione o Centro de Trabalho." },
+                { id: "ordemConcluida", mensagem: "Selecione se a Ordem foi Concluída." }
+            ];
+
+            let campoInvalido = false;
+
+            camposObrigatorios.forEach(campo => {
+                const elemento = document.getElementById(campo.id);
+                elemento.style.border = "1px solid #ccc"; // Resetando a borda
+
+                if (!elemento.value.trim()) {
+                    alert(`⚠️ ${campo.mensagem}`);
+                    elemento.style.border = "2px solid red"; // Destaca o erro
+                    elemento.focus();
+                    campoInvalido = true;
+                    return;
+                }
+            });
+
+            if (campoInvalido) return;
+
+            const dataHoraFinal = new Date(document.getElementById("dataHoraFinal").value);
+            if (dataHoraFinal > agora) {
+                alert("⚠️ A Data e Hora Final não pode ser maior que o momento atual.");
+                document.getElementById("dataHoraFinal").style.border = "2px solid red";
+                document.getElementById("dataHoraFinal").focus();
+                return;
+            }
+
+            // Captura os dados do formulário
+            const apontamento = {
+                numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
+                dataHoraInicial: document.getElementById("dataHoraInicial").value,
+                dataHoraFinal: document.getElementById("dataHoraFinal").value,
+                manutentor: document.getElementById("manutentor").value,
+                centroTrabalho: document.getElementById("centroTrabalho").value,
+                ordemConcluida: document.getElementById("ordemConcluida").value,
+                observacao: document.getElementById("observacao").value
+            };
+
+            // Verifica se há imagem anexada
+            const imagemInput = document.getElementById("imagem");
+            if (imagemInput.files.length > 0) {
+                const imagem = imagemInput.files[0];
+                const formData = new FormData();
+                formData.append("file", imagem);
+
+                try {
+                    const uploadResponse = await fetch("https://api.imgbb.com/1/upload?key=SUA_CHAVE_IMGBB", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const uploadResult = await uploadResponse.json();
+                    if (uploadResult.success) {
+                        apontamento.imagemLink = uploadResult.data.url;
+                    } else {
+                        apontamento.imagemLink = "Erro no upload";
+                    }
+                } catch (error) {
+                    console.error("Erro no upload da imagem:", error);
+                    apontamento.imagemLink = "Erro no upload";
+                }
+            }
+
+            try {
+                // Salvar no Firestore
+                await db.collection("apontamentos").add(apontamento);
+
+                alert("✅ Apontamento enviado com sucesso!");
+                document.getElementById("formApontamento").reset();
+            } catch (error) {
+                console.error("Erro ao enviar apontamento:", error);
+                alert("❌ Erro ao enviar os dados.");
+            }
+        }
+    </script>
 </body>
 </html>
