@@ -1,4 +1,4 @@
-// Agora usamos módulos do Firebase
+// Importações do Firebase Modular
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
@@ -7,7 +7,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyAUlxHPDSkSDoiXA4eg5BUW9sRxZfz9GI8",
     authDomain: "apontamento-pcm-2fb0e.firebaseapp.com",
     projectId: "apontamento-pcm-2fb0e",
-    storageBucket: "apontamento-pcm-2fb0e.appspot.com", // 🔥 Corrigido
+    storageBucket: "apontamento-pcm-2fb0e.appspot.com",
     messagingSenderId: "359651627373",
     appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
 };
@@ -76,5 +76,6 @@ async function enviarApontamento() {
     }
 }
 
-// Evento no botão para evitar problemas de carregamento
-document.getElementById("btnEnviar").addEventListener("click", enviarApontamento);
+// 🔥 Expõe as funções para o HTML
+window.buscarSolicitacao = buscarSolicitacao;
+window.enviarApontamento = enviarApontamento;
