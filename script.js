@@ -3,7 +3,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyAUlxHPDSkSDoiXA4eg5BUW9sRxZfz9GI8",
     authDomain: "apontamento-pcm-2fb0e.firebaseapp.com",
     projectId: "apontamento-pcm-2fb0e",
-    storageBucket: "apontamento-pcm-2fb0e.firebasestorage.app",
+    storageBucket: "apontamento-pcm-2fb0e.appspot.com", // 🔥 Corrigido o domínio
     messagingSenderId: "359651627373",
     appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
 };
@@ -12,7 +12,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-console.log("Firebase inicializado:", firebase.apps.length > 0);
+console.log("✅ Firebase inicializado:", firebase.apps.length > 0);
 
 // Função para buscar solicitação
 async function buscarSolicitacao() {
@@ -67,7 +67,7 @@ async function enviarApontamento() {
         alert("✅ Apontamento enviado com sucesso!");
         document.getElementById("formApontamento").reset();
     } catch (error) {
-        console.error("Erro ao enviar apontamento:", error);
+        console.error("❌ Erro ao enviar apontamento:", error);
         alert("❌ Erro ao enviar os dados.");
     }
 }
