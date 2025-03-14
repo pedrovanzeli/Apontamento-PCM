@@ -37,7 +37,7 @@ input, select, textarea {
     box-sizing: border-box;
 }
 
-/* Destacar campo inválido */
+/* Destacar campo em foco */
 input:focus, select:focus, textarea:focus {
     border: 2px solid #007bff;
     outline: none;
@@ -46,6 +46,7 @@ input:focus, select:focus, textarea:focus {
 /* Campo inválido */
 input.invalid, select.invalid, textarea.invalid {
     border: 2px solid red !important;
+    background-color: #f8d7da;  /* Cor de fundo para campo inválido */
 }
 
 /* Botão principal */
