@@ -5,27 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apontamento de Serviço</title>
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-        // Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyAUlxHPDSkSDoiXA4eg5BUW9sRxZfz9GI8",
-            authDomain: "apontamento-pcm-2fb0e.firebaseapp.com",
-            projectId: "apontamento-pcm-2fb0e",
-            storageBucket: "apontamento-pcm-2fb0e.firebasestorage.app",
-            messagingSenderId: "359651627373",
-            appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
-        };
-
-        // Inicialização do Firebase
-        const app = initializeApp(firebaseConfig);
-        window.db = getFirestore(app); // Torna o Firestore acessível globalmente
-    </script>
-
+    <!-- Script principal -->
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -33,7 +18,7 @@
         <h1>Apontamento de Serviço</h1>
         <label for="numeroSolicitacao">Número de Solicitação:</label>
         <input type="text" id="numeroSolicitacao">
-        <button onclick="buscarSolicitacao()" aria-label="Buscar Solicitação">Buscar</button>
+        <button onclick="buscarSolicitacao()">Buscar</button>
         <div id="resultado"></div>
 
         <!-- Formulário de Apontamento -->
@@ -66,7 +51,6 @@
         </div>
     </div>
 
-    <!-- Rodapé fixo -->
     <footer>
         <div class="footer-content">
             <h3>Fale com a Holambra</h3>
