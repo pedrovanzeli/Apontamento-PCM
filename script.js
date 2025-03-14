@@ -39,14 +39,61 @@ function verificarApontamentoFinalizado(resposta) {
     if (resposta === "Sim") {
         // Coleta os dados do formulário com os novos nomes de campo
         const numeroOrdem = document.getElementById("numeroSolicitacao").value;
-        const descricaoServico = document.getElementById("descricaoServico").value; // Atualize conforme necessário
-        const setor = document.getElementById("setor").value; // Atualize conforme necessário
+        const descricaoServico = document.getElementById("descricaoServico").value;
+        const setor = document.getElementById("setor").value;
         const manutentor = document.getElementById("manutentor").value;
         const centroTrabalho = document.getElementById("centroTrabalho").value;
         const ordemConcluida = document.getElementById("ordemConcluida").value;
         const observacoes = document.getElementById("observacao").value;
         const dataHoraInicial = document.getElementById("dataHoraInicial").value;
         const dataHoraFinal = document.getElementById("dataHoraFinal").value;
+
+        // Variável para verificar se algum campo é inválido
+        let isValid = true;
+
+        // Validação de campos obrigatórios
+        if (!manutentor || !centroTrabalho || !ordemConcluida) {
+            isValid = false;
+            if (!manutentor) document.getElementById("manutentor").classList.add("invalid");
+            if (!centroTrabalho) document.getElementById("centroTrabalho").classList.add("invalid");
+            if (!ordemConcluida) document.getElementById("ordemConcluida").classList.add("invalid");
+        } else {
+            document.getElementById("manutentor").classList.remove("invalid");
+            document.getElementById("centroTrabalho").classList.remove("invalid");
+            document.getElementById("ordemConcluida").classList.remove("invalid");
+        }
+
+        // Validação das datas
+        const currentDate = new Date();
+        const dateHoraInicialObj = new Date(dataHoraInicial);
+        const dateHoraFinalObj = new Date(dataHoraFinal);
+
+        if (dateHoraInicialObj > currentDate) {
+            isValid = false;
+            document.getElementById("dataHoraInicial").classList.add("invalid");
+        } else {
+            document.getElementById("dataHoraInicial").classList.remove("invalid");
+        }
+
+        if (dateHoraFinalObj > currentDate) {
+            isValid = false;
+            document.getElementById("dataHoraFinal").classList.add("invalid");
+        } else {
+            document.getElementById("dataHoraFinal").classList.remove("invalid");
+        }
+
+        if (dateHoraFinalObj < dateHoraInicialObj) {
+            isValid = false;
+            document.getElementById("dataHoraFinal").classList.add("invalid");
+        } else {
+            document.getElementById("dataHoraFinal").classList.remove("invalid");
+        }
+
+        // Se algum campo estiver inválido, não envia os dados
+        if (!isValid) {
+            alert("Por favor, revise os campos destacados em vermelho.");
+            return; // Interrompe a execução e não redireciona
+        }
 
         // Construindo a URL do Jotform com os dados
         const jotformUrl = `https://form.jotform.com/250724680785667?numeroOrdem=${encodeURIComponent(numeroOrdem)}&descricaoServico=${encodeURIComponent(descricaoServico)}&setor=${encodeURIComponent(setor)}&manutentor=${encodeURIComponent(manutentor)}&centroTrabalho=${encodeURIComponent(centroTrabalho)}&ordemConcluida=${encodeURIComponent(ordemConcluida)}&observacoes=${encodeURIComponent(observacoes)}&dataHoraInicial=${encodeURIComponent(dataHoraInicial)}&dataHoraFinal=${encodeURIComponent(dataHoraFinal)}`;
