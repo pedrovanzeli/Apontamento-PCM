@@ -11,7 +11,7 @@ const firebaseConfig = {
 // Inicialize o Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Obtenha a referência ao Firestore
+// Obtenha a referência ao Firestore após a inicialização
 const db = firebase.firestore();
 
 // Função para buscar solicitação
