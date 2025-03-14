@@ -1,18 +1,25 @@
+// Verifica se o Firebase já foi carregado
+if (typeof firebase === "undefined") {
+    console.error("🔥 ERRO: O Firebase não foi carregado. Verifique a importação no HTML.");
+} else {
+    console.log("✅ Firebase carregado corretamente.");
+}
+
 // Configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyAUlxHPDSkSDoiXA4eg5BUW9sRxZfz9GI8",
     authDomain: "apontamento-pcm-2fb0e.firebaseapp.com",
     projectId: "apontamento-pcm-2fb0e",
-    storageBucket: "apontamento-pcm-2fb0e.appspot.com", // 🔥 Corrigido o domínio
+    storageBucket: "apontamento-pcm-2fb0e.appspot.com", // 🔥 Corrigido
     messagingSenderId: "359651627373",
     appId: "1:359651627373:web:b7e8e633348c83b5ee0a64"
 };
 
-// Inicializa o Firebase
+// Inicializa o Firebase e garante que ele esteja pronto antes de acessar o Firestore
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-console.log("✅ Firebase inicializado:", firebase.apps.length > 0);
+console.log("✅ Firebase inicializado com sucesso:", firebase.apps.length > 0);
 
 // Função para buscar solicitação
 async function buscarSolicitacao() {
@@ -52,6 +59,11 @@ async function buscarSolicitacao() {
 
 // Função para enviar apontamento
 async function enviarApontamento() {
+    if (!firebase.apps.length) {
+        console.error("🔥 Firebase não está inicializado corretamente!");
+        return;
+    }
+
     const apontamento = {
         numeroSolicitacao: document.getElementById("numeroSolicitacao").value,
         dataHoraInicial: document.getElementById("dataHoraInicial").value,
