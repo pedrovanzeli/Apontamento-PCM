@@ -20,25 +20,25 @@
         <!-- Formulário de Apontamento -->
         <div id="formApontamento" style="display: none;">
             <h3>Apontamento de Serviço</h3>
-            <label>Data e Hora Inicial:</label>
+            <label for="dataHoraInicial">Data e Hora Inicial:</label>
             <input type="datetime-local" id="dataHoraInicial">
-            <label>Data e Hora Final:</label>
+            <label for="dataHoraFinal">Data e Hora Final:</label>
             <input type="datetime-local" id="dataHoraFinal">
-            <label>Identificação do Manutentor:</label>
+            <label for="manutentor">Identificação do Manutentor:</label>
             <input type="text" id="manutentor">
-            <label>Centro de Trabalho:</label>
+            <label for="centroTrabalho">Centro de Trabalho:</label>
             <select id="centroTrabalho">
                 <option value="Eletrica">Elétrica</option>
                 <option value="Mecanica">Mecânica</option>
             </select>
-            <label>Ordem Concluída:</label>
+            <label for="ordemConcluida">Ordem Concluída:</label>
             <select id="ordemConcluida">
                 <option value="Sim">Sim</option>
                 <option value="Não">Não</option>
             </select>
-            <label>Observação:</label>
+            <label for="observacao">Observação:</label>
             <textarea id="observacao"></textarea>
-            <label>Anexar Imagem:</label>
+            <label for="imagem">Anexar Imagem:</label>
             <input type="file" id="imagem" accept="image/*">
             <div id="imagemLink" style="display: none;">
                 <a id="imagemLinkText" href="#" target="_blank">Clique para visualizar a imagem anexada</a>
@@ -46,8 +46,8 @@
 
             <!-- Pergunta de finalização -->
             <h3>Apontamento Finalizado?</h3>
-            <button onclick="verificarFinalizacao(true)">Sim</button>
-            <button onclick="verificarFinalizacao(false)">Não</button>
+            <button id="botaoSim">Sim</button>
+            <button id="botaoNao">Não</button>
 
             <!-- Mensagem de revisão -->
             <div id="revisaoMensagem" style="display: none;">
