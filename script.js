@@ -95,11 +95,25 @@ function verificarApontamentoFinalizado(resposta) {
             return; // Interrompe a execução e não redireciona
         }
 
-        // Construindo a URL do Jotform com os dados
-        const jotformUrl = `https://form.jotform.com/250724680785667?numeroOrdem=${encodeURIComponent(numeroOrdem)}&descricaoServico=${encodeURIComponent(descricaoServico)}&setor=${encodeURIComponent(setor)}&manutentor=${encodeURIComponent(manutentor)}&centroTrabalho=${encodeURIComponent(centroTrabalho)}&ordemConcluida=${encodeURIComponent(ordemConcluida)}&observacoes=${encodeURIComponent(observacoes)}&dataHoraInicial=${encodeURIComponent(dataHoraInicial)}&dataHoraFinal=${encodeURIComponent(dataHoraFinal)}`;
+        // Criando a mensagem para o WhatsApp com os dados do apontamento
+        const mensagem = `
+            *Apontamento de Serviço*\n
+            *Número da Ordem:* ${numeroOrdem}\n
+            *Descrição do Serviço:* ${descricaoServico}\n
+            *Setor:* ${setor}\n
+            *Manutentor:* ${manutentor}\n
+            *Centro de Trabalho:* ${centroTrabalho}\n
+            *Ordem Concluída:* ${ordemConcluida}\n
+            *Observações:* ${observacoes}\n
+            *Data e Hora Inicial:* ${dataHoraInicial}\n
+            *Data e Hora Final:* ${dataHoraFinal}
+        `;
 
-        // Redireciona para o Jotform com os dados preenchidos
-        window.location.href = jotformUrl;
+        // Criando o link do WhatsApp com a mensagem
+        const whatsappUrl = `https://wa.me/5511XXXXXXXXX?text=${encodeURIComponent(mensagem)}`;
+
+        // Redireciona para o WhatsApp com os dados preenchidos
+        window.location.href = whatsappUrl;
     } else {
         // Caso a resposta seja "Não", peça para revisar os dados
         alert("Por favor, revise as informações antes de finalizar.");
